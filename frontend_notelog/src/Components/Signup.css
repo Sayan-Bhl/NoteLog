@@ -1,0 +1,26 @@
+.login:link {
+    text-decoration: none;
+}
+
+.login:hover {
+    text-decoration: underline;
+}
+
+.conditions {
+    font-size: 11px;
+}
+
+#signup {
+    margin-top: 130px;
+    width: 45%;
+}
+@media only screen and (max-width: 1200px) {
+    #signup{
+        width: 80%;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    #signup{
+        width:100%;
+    }
+  }

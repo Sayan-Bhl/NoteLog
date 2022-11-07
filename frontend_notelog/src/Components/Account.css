@@ -1,0 +1,23 @@
+.name {
+    font-weight: 630;
+}
+
+.detail {
+    border-bottom: solid 1px black;
+}
+
+#account {
+    background-color: rgb(236, 236, 236);
+    margin-top: 130px;
+    width: 30%;
+}
+@media only screen and (max-width: 1200px) {
+    #account{
+        width: 50%;
+    }
+}
+@media only screen and (max-width: 600px) {
+    #account{
+        width:90%;
+    }
+}

@@ -1,0 +1,20 @@
+#makeNote {
+    text-align: left;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 1px 1px 1px 6px;
+    padding: 8px;
+    box-shadow: 0.3px 0.3px 3px 3px rgb(196, 195, 195);
+}
+
+
+.element {
+    text-align: left;
+}
+
+#description {
+    width: 100%;
+    overflow: auto;
+    outline: none;
+    resize: none;
+}
