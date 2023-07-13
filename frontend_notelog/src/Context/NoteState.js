@@ -3,7 +3,7 @@ import axios from "axios"
 import NoteContext from "./NoteContext"
 
 const NoteState = (props) => {
-  const host = `http://localhost:${process.env.REACT_APP_API_PORT}`;
+  const host = process.env.REACT_APP_API;
   const notesInitial = []
   const [notes, setNotes] = useState(notesInitial);
 
