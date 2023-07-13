@@ -12,7 +12,7 @@ const Signup = (props) => {
     const handleChange = (e) => {
       setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
-    const host = `http://localhost:${process.env.REACT_APP_API_PORT}`;
+    const host = process.env.REACT_APP_API;
   
     const handleSubmit = async (e) => {
       e.preventDefault();

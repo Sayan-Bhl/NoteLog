@@ -6,7 +6,7 @@ const Login = (props) => {
   let navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" });
 
-  const host = `http://localhost:${process.env.REACT_APP_API_PORT}`;
+  const host = process.env.REACT_APP_API_PORT;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
