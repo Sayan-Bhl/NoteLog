@@ -14,11 +14,6 @@ const notesSchema = new Schema({
     description: {
         type: String
     },
-    ufile:{
-		data: Buffer,
-		contentType: String,
-        name:String
-	},
     date: {
         type: Date,
         default: Date.now

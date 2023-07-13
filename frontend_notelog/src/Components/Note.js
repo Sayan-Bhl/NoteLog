@@ -9,7 +9,7 @@ import Linkify from 'react-linkify'
 const Note = (props) => {
     const contextNote=useContext(NoteContext);
     const {deleteNote,updateBack}=contextNote;
-    const {note,edit, showAlert}=props
+    const {note,edit, showAlert,updateB}=props
     const [display,setDisplay]=useState("none")
     
    
@@ -23,10 +23,12 @@ const Note = (props) => {
 
 
     const del=(e)=>{
+        e.preventDefault()
         deleteNote(note._id);
         showAlert("Note deleted successfully","success")
     }
     const handleedit=(e)=>{
+        e.preventDefault()
         edit(note);
     }
     const show=()=>{
@@ -39,8 +41,8 @@ const Note = (props) => {
         
     }
     const showoff=(backcolor)=>{
-        setDisplay("none");
-        updateBack(note._id,backcolor);
+        updateBack(note._id, backcolor);
+        setDisplay("none"); 
     }
     
 
@@ -54,10 +56,8 @@ const Note = (props) => {
                     <Linkify>
                     <p className="card-text">{note.description}</p>
                     </Linkify>
-                    { (note.ufile !==undefined)&&<img className="mb-4" src={`data:${note.ufile.contentType};base64,${btoa(
-                        String.fromCharCode(...new Uint8Array((note.ufile.data.data)))
-                      )}`} style={{maxWidth:"100%"}}/>}
-                      <br/>
+                    
+                     
                     
                     <Tippy content="Edit note">
                     <svg onClick={handleedit} xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" id="edit" className="bi bi-pencil-square" viewBox="0 0 16 16">

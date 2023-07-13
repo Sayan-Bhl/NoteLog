@@ -11,33 +11,30 @@ const NoteState = (props) => {
 
   /*-------------------------------------------Get all notes--------------------------------------*/
   const getNotes = async () => {
-    let options={
+    let options = {
       headers: {
         'auth-token': localStorage.getItem('token')
       }
     }
-    axios.get(`${host}/api/notes/fetchallnotes`,options).then((res)=>setNotes(res.data))
-    .catch((err)=>console.log(err))
+    axios.get(`${host}/api/notes/fetchallnotes`, options).then((res) => setNotes(res.data))
+      .catch((err) => console.log(err))
+      console.log(notes);
   }
 
 
 
   /*---------------------------------------------Add a note---------------------------------------*/
-  const addNote = async (title, description, ufile) => {
+  const addNote = async (note) => {
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    (ufile!=="")&&formData.append("ufile", ufile, ufile.name);
-    let options={
+    let options = {
       headers: {
         'auth-token': localStorage.getItem('token')
       }
     }
     try {
-      let response= await axios.post(`${host}/api/notes/addnote`,formData, options )
+      let response = await axios.post(`${host}/api/notes/addnote`, { "title": note.title, "description":note.description }, options)
       console.log(response)
-      
+      setNotes(notes.concat(note))
     } catch (error) {
       console.log(error)
     }
@@ -48,15 +45,16 @@ const NoteState = (props) => {
   /*--------------------------------------- Delete a note--------------------------------------*/
 
   const deleteNote = async (id) => {
-    let options={
+    let options = {
       headers: {
         'auth-token': localStorage.getItem('token')
       }
     }
     try {
-      let response= await axios.delete(`${host}/api/notes/deletenote/${id}`, options )
+      let response = await axios.delete(`${host}/api/notes/deletenote/${id}`, options)
       console.log(response)
-      
+      const updatedNotes = notes.filter((note) => { return note._id !== id })
+      setNotes(updatedNotes)
     } catch (error) {
       console.log(error)
     }
@@ -64,39 +62,38 @@ const NoteState = (props) => {
   }
 
   /*--------------------------------------- Edit a note--------------------------------------*/
-  const editNote = async (id, title, description,ufile) => {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    if(ufile!==""){
-      if(ufile.data===undefined){
-      formData.append("ufile", ufile, ufile.name)
-      formData.append("old",false)
-      }
-      else{
-        formData.append("old",true)
-      }
-    }else{
-      formData.append("old",false)
-    }
-    let options={
+  const editNote = async (id, title, description) => {
+   
+    let options = {
       headers: {
         'auth-token': localStorage.getItem('token')
       }
     }
     try {
-      let response= await axios.put(`${host}/api/notes/updatenote/${id}`,formData, options )
+      let response = await axios.put(`${host}/api/notes/updatenote/${id}`, { "title": title, "description": description }, options)
       console.log(response)
-      
+      for(let i=0; i<notes.length; ++i){
+          let element=notes[i]
+          if(element._id===id){
+            element.title=title
+            element.description=description
+          }
+      }
     } catch (error) {
       console.log(error)
     }
   }
 
-  /*--------------------------------------- Background options--------------------------------------*/
+  /*---------------------------------------Background options--------------------------------------*/
 
   const updateBack = async (id, backgroundColor) => {
     try {
+      for (let i = 0; i < notes.length; ++i) {
+        let element = notes[i]
+        if (element._id === id) {
+          element.backgroundColor = backgroundColor;
+        }
+      }
       const response = await fetch(`${host}/api/notes/updateBackground/${id}`, {
         method: 'PUT',
         headers: {
@@ -109,7 +106,7 @@ const NoteState = (props) => {
     } catch (error) {
       console.log(error)
     }
-    
+
   }
 
 
@@ -125,13 +122,13 @@ const NoteState = (props) => {
         }
       });
       const json = await response.json();
-  
+
       setAccount({ name: json.name, email: json.email });
-      
+
     } catch (error) {
       console.log(error)
     }
-    
+
   }
 
 
